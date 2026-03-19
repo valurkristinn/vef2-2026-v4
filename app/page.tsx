@@ -23,6 +23,7 @@ export default async function Home({
 
   const news = await getNews((limitedPage - 1) * limit);
 
+
   return (
     <>
       <NewsList news={news.data} authors={authorList.data} />

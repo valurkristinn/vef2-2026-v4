@@ -21,7 +21,6 @@ async function getData(url: string) {
 
 export async function reqNews(type: "POST" | "PUT", body: NewsType) {
   const url = type == "PUT" ? "/news/" + body.slug: "/news";
-  console.log(process.env.API_URL + url);
   try {
     const response = await fetch(process.env.API_URL + url, {
       method: type,

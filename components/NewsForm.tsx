@@ -20,46 +20,71 @@ export default function NewsForm({
       authorId: 0,
     };
   }
+
+  const inputClass =
+    "w-full border-b border-gray p-3 !text-sm focus:outline-none ";
+  const labelClass = "text-sm self-center";
+
   return (
     <section>
-      <form action={submit} className="flex flex-col gap-4">
+      <form action={submit} className="grid grid-cols-[auto_1fr] gap-4 items-start mt-20">
+        <label className={labelClass}>Title</label>
         <input
           type="text"
           name="title"
           defaultValue={news.title}
           placeholder="News Title"
+          className={inputClass}
         />
 
+        <label className={labelClass}>Excerpt</label>
         <textarea
           name="excerpt"
           defaultValue={news.excerpt}
           placeholder="Excerpt"
+          className={inputClass}
         />
 
+        <label className={labelClass}>Content</label>
         <textarea
           name="content"
           defaultValue={news.content}
           placeholder="Full Content"
           rows={5}
+          className={inputClass}
         />
 
-        <input
-          type="checkbox"
-          name="published"
-          defaultValue={news.published + ""}
-        />
-
-        <select name="authorId" defaultValue={news.authorId}>
+        <label className={labelClass}>Author</label>
+        <select
+          name="authorId"
+          defaultValue={news.authorId}
+          className={inputClass}
+        >
           {authors.map((a) => (
-            <option value={a.id} key={a.id} >
+            <option value={a.id} key={a.id}>
               {a.name}
             </option>
           ))}
         </select>
 
+        <label className={labelClass}>Published</label>
+        <input
+          type="checkbox"
+          name="published"
+          defaultChecked={news.published}
+          className="justify-self-start self-center"
+        />
+
         <input type="hidden" name="slug" value={news.slug} />
 
-        <button type="submit">Vista</button>
+        <div className="col-span-2 justify-self-end">
+          <button
+            type="submit"
+            className="border border-gray rounded px-4 py-1 text-sm hover:bg-gray"
+          >
+            Vista
+          </button>
+        </div>
       </form>
     </section>
   );

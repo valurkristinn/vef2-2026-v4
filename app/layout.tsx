@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./github-markdown-light.css"
-import "./globals.css"
+import "./github-markdown-light.css";
+import "./globals.css";
+import Nav from "@/components/Nav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,9 +23,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-      <main className="max-w-3xl w-[90vw] !mx-auto px-6 markdown-body">
-      {children}
-      </main>
+        <Nav />
+        <main className="markdown-body max-w-3xl w-[90vw] !mx-auto px-6 !my-20 ">
+          {children}
+        </main>
       </body>
     </html>
   );
