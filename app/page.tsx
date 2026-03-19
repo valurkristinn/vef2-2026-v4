@@ -1,6 +1,7 @@
 import NewsList from "@/components/NewsList";
 import { getAuthors, getNews } from "./lib/fetch";
 import Link from "next/link";
+import Error from "@/components/Error";
 
 const MIN_PAGE = 1;
 
@@ -22,7 +23,10 @@ export default async function Home({
   const limitedPage = Math.max(Math.min(pageNum, MaxPage), MIN_PAGE);
 
   const news = await getNews((limitedPage - 1) * limit);
-
+  
+  if (!news) {
+    return <Error status="404" message="Frétt fannst ekki" />;
+  }
 
   return (
     <>

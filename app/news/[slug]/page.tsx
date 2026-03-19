@@ -8,6 +8,7 @@ import { NewsType } from "@/app/lib/types";
 import NewsPage from "@/components/NewsPage";
 import NewsForm from "@/components/NewsForm";
 import { redirect } from "next/navigation";
+import Error from "@/components/Error";
 
 async function submit(formData: FormData) {
   "use server";
@@ -44,14 +45,22 @@ export default async function News({
   const { slug } = await params;
   const { edit } = await searchParams;
 
+  const news = await getNewsBySlug(slug);
+  if (!news) {
+    return <Error status="404" message="Frétt fannst ekki" />;
+  }
   if (edit && edit.toLowerCase() === "true") {
-    const news = await getNewsBySlug(slug);
     const authors = await getAuthors();
+    if (!authors) {
+      return <Error status="404" message="Frétt fannst ekki" />;
+    }
 
     return <NewsForm news={news} submit={submit} authors={authors.data} />;
   } else {
-    const news = await getNewsBySlug(slug);
     const author = await getAuthorById(news.authorId);
+    if (!author) {
+      return <Error status="404" message="Frétt fannst ekki" />;
+    }
 
     return <NewsPage news={news} author={author} />;
   }
