@@ -1,37 +1,36 @@
 import NewsList from "@/components/NewsList";
-import { AuthorType, ListType, NewsType } from "@/types";
+import { getAuthors, getNews } from "./lib/fetch";
+import Link from "next/link";
 
-async function getData(url: string, offset?: number, limit?: number) {
-  try {
-    if (!offset) {
-      offset = 0;
-    }
-    if (!limit) {
-      limit = 10;
-    }
-    const response = await fetch(
-      process.env.API_URL + url + "?offset=" + offset + "&limit=" + limit,
-    );
+const MIN_PAGE = 1;
 
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+const newsList = await getNews();
+const authorList = await getAuthors();
 
-    const result = await response.json();
-    console.log(result);
-    return result;
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    } else {
-      console.error("Óþekkt villa:", error);
-    }
-  }
-}
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ page: string }>;
+}) {
+  const { page } = await searchParams;
+  const pageNum = parseInt(page) ? parseInt(page) : 0;
 
-const newsList: ListType<NewsType> = await getData("/news");
-const authorList: ListType<AuthorType> = await getData("/authors");
+  const total = newsList.paging.total;
+  const limit = newsList.paging.limit;
+  const MaxPage = Math.ceil(total / limit);
 
-export default function Home() {
-  return <NewsList news={newsList.data} authors={authorList.data} />;
+  const limitedPage = Math.max(Math.min(pageNum, MaxPage), MIN_PAGE);
+
+  const news = await getNews((limitedPage - 1) * limit);
+
+  return (
+    <>
+      <NewsList news={news.data} authors={authorList.data} />
+      <div>
+        <Link href={`./?page=${limitedPage - 1}`}>←</Link>
+        <span>Síða {limitedPage}</span>
+        <Link href={`./?page=${limitedPage + 1}`}>→</Link>
+      </div>
+    </>
+  );
 }

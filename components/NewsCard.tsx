@@ -1,4 +1,4 @@
-import { AuthorType, NewsType } from "@/types";
+import { AuthorType, NewsType } from "@/app/lib/types";
 
 export default function NewsCard({
   news,
@@ -7,15 +7,16 @@ export default function NewsCard({
   news: NewsType;
   authors: AuthorType[];
 }) {
-  const author = authors.find((a) => a.id === news.authorId)!.name;
+  const authorObj = authors.find((a) => a.id === news.authorId);
+  
 
   return (
     <article>
-      <a href={news.slug}>
+      <a href={"news/" + news.slug}>
         <h3>{news.title}</h3>
       </a>
       <p>{news.excerpt}</p>
-      <p>{author}</p>
+      <p>{authorObj && authorObj.name}</p>
     </article>
   );
 }

@@ -1,4 +1,4 @@
-import { AuthorType, NewsType } from "@/types";
+import { AuthorType, NewsType } from "@/app/lib/types";
 import NewsCard from "./NewsCard";
 
 export default function NewsList({
