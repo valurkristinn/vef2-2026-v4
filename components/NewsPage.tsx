@@ -14,7 +14,7 @@ export default function NewsPage({
       <h4>{news.excerpt}</h4>
       <p>{news.content}</p>
       <p>
-        {author.name} <span className="sub">{author.email}</span>
+        {author.name}    <span className="text-xs text-gray">{author.email}</span>
       </p>
       <Link href={"/news/" + news.slug + "?edit=true"}>Breyta</Link>
     </section>
