@@ -28,33 +28,30 @@ export default function NewsForm({
   return (
     <section>
       <form action={submit} className="grid grid-cols-[auto_1fr] gap-4 items-start mt-20">
-        <label className={labelClass}>Title</label>
+        <label className={labelClass}>Titill</label>
         <input
           type="text"
           name="title"
           defaultValue={news.title}
-          placeholder="News Title"
           className={inputClass}
         />
 
-        <label className={labelClass}>Excerpt</label>
+        <label className={labelClass}>Stutt lýsing</label>
         <textarea
           name="excerpt"
           defaultValue={news.excerpt}
-          placeholder="Excerpt"
           className={inputClass}
         />
 
-        <label className={labelClass}>Content</label>
+        <label className={labelClass}>Efni</label>
         <textarea
           name="content"
           defaultValue={news.content}
-          placeholder="Full Content"
           rows={5}
           className={inputClass}
         />
 
-        <label className={labelClass}>Author</label>
+        <label className={labelClass}>Höfundur</label>
         <select
           name="authorId"
           defaultValue={news.authorId}
@@ -67,7 +64,7 @@ export default function NewsForm({
           ))}
         </select>
 
-        <label className={labelClass}>Published</label>
+        <label className={labelClass}>Birt</label>
         <input
           type="checkbox"
           name="published"

@@ -28,7 +28,7 @@ async function submit(formData: FormData) {
     redirect(`/news/${news.slug}?edit=false`);
   } else {
     const status = request?.status ?? 500;
-    let message = "Unknown error";
+    let message = "Óþekkt villa";
     if (request instanceof Response) {
       const errorData = await request?.json();
       const errors = JSON.parse(errorData.error.message);
