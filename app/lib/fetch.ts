@@ -20,7 +20,7 @@ async function getData(url: string) {
 }
 
 export async function reqNews(type: "POST" | "PUT", body: NewsType) {
-  const url = type == "PUT" ? "/news/" + body.slug: "/news";
+  const url = type === "PUT" ? "/news/" + body.slug : "/news";
   try {
     const response = await fetch(process.env.API_URL + url, {
       method: type,
@@ -30,20 +30,12 @@ export async function reqNews(type: "POST" | "PUT", body: NewsType) {
       body: JSON.stringify(body),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-
-      throw new Error(
-        `Response status: ${response.status}\nError message: ${errorData?.error?.message || "Óþekkt villa frá API"}`,
-      );
-    }
-
     return response;
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message);
+      return { isError: true, status: "500", message: error.message };
     } else {
-      console.error("Óþekkt villa:", error);
+      return { isError: true, status: "500", message: "Óþekkt villa við uppfærslu" };
     }
   }
 }
